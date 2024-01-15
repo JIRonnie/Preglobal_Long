@@ -165,7 +165,7 @@ jobs:
     name: unit tests
     runs-on: ${{ ((github.repository == 'jnewb1/openpilot') &&
                    ((github.event_name != 'pull_request') || 
-                    (github.event.pull_request.head.repo.full_name == 'jnewb1/openpilot'))) && 'nscloud-ubuntu-22.04-8x8' || 'ubuntu-20.04' }}
+                    (github.event.pull_request.head.repo.full_name == 'jnewb1/openpilot'))) && 'nscloud-ubuntu-22.04-amd64-8x8' || 'ubuntu-20.04' }}
     steps:
     - uses: actions/checkout@v4
       with:
@@ -196,7 +196,7 @@ jobs:
     name: process replay
     runs-on: ${{ ((github.repository == 'jnewb1/openpilot') &&
                    ((github.event_name != 'pull_request') || 
-                    (github.event.pull_request.head.repo.full_name == 'jnewb1/openpilot'))) && 'nscloud-ubuntu-22.04-8x8' || 'ubuntu-20.04' }}
+                    (github.event.pull_request.head.repo.full_name == 'jnewb1/openpilot'))) && 'nscloud-ubuntu-22.04-amd64-8x8' || 'ubuntu-20.04' }}
     steps:
     - uses: actions/checkout@v4
       with:
