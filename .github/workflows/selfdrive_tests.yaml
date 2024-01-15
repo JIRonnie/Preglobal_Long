@@ -44,7 +44,7 @@ jobs:
       run: TARGET_DIR=$STRIPPED_DIR release/build_devel.sh
     - uses: ./.github/workflows/setup-with-retry
     - name: Check submodules
-      if: github.ref == 'refs/heads/master' && github.repository == 'commaai/openpilot'
+      if: github.ref == 'refs/heads/master' && github.repository == 'jnewb1/openpilot'
       timeout-minutes: 1
       run: release/check-submodules.sh
     - name: Build openpilot and run checks
@@ -72,9 +72,9 @@ jobs:
     strategy:
       matrix:
         arch: ${{ fromJson(
-           ((github.repository == 'commaai/openpilot') &&
+           ((github.repository == 'jnewb1/openpilot') &&
               ((github.event_name != 'pull_request') || 
-               (github.event.pull_request.head.repo.full_name == 'commaai/openpilot'))) && '["x86_64", "aarch64"]' || '["x86_64"]' ) }}
+               (github.event.pull_request.head.repo.full_name == 'jnewb1/openpilot'))) && '["x86_64", "aarch64"]' || '["x86_64"]' ) }}
     runs-on: ${{ (matrix.arch == 'aarch64') && 'nscloud-ubuntu-22.04-arm64-2x4' || 'ubuntu-20.04' }}
     steps:
     - uses: actions/checkout@v4
@@ -93,9 +93,9 @@ jobs:
     name: docker push
     strategy:
       matrix:
-        arch: ${{ fromJson( (github.repository == 'commaai/openpilot') && '["x86_64", "aarch64"]' || '["x86_64"]' ) }}
+        arch: ${{ fromJson( (github.repository == 'jnewb1/openpilot') && '["x86_64", "aarch64"]' || '["x86_64"]' ) }}
     runs-on: ${{ (matrix.arch == 'aarch64') && 'nscloud-ubuntu-22.04-arm64-2x4' || 'ubuntu-20.04' }}
-    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && github.repository == 'commaai/openpilot'
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && github.repository == 'jnewb1/openpilot'
     steps:
     - uses: actions/checkout@v4
       with:
@@ -117,7 +117,7 @@ jobs:
   docker_push_multiarch:
     name: docker push multiarch tag
     runs-on: ubuntu-20.04
-    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && github.repository == 'commaai/openpilot'
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && github.repository == 'jnewb1/openpilot'
     needs: [docker_push]
     steps:
     - uses: actions/checkout@v4
@@ -163,9 +163,9 @@ jobs:
 
   unit_tests:
     name: unit tests
-    runs-on: ${{ ((github.repository == 'commaai/openpilot') &&
+    runs-on: ${{ ((github.repository == 'jnewb1/openpilot') &&
                    ((github.event_name != 'pull_request') || 
-                    (github.event.pull_request.head.repo.full_name == 'commaai/openpilot'))) && 'nscloud-ubuntu-22.04-8x8' || 'ubuntu-20.04' }}
+                    (github.event.pull_request.head.repo.full_name == 'jnewb1/openpilot'))) && 'nscloud-ubuntu-22.04-8x8' || 'ubuntu-20.04' }}
     steps:
     - uses: actions/checkout@v4
       with:
@@ -194,9 +194,9 @@ jobs:
 
   process_replay:
     name: process replay
-    runs-on: ${{ ((github.repository == 'commaai/openpilot') &&
+    runs-on: ${{ ((github.repository == 'jnewb1/openpilot') &&
                    ((github.event_name != 'pull_request') || 
-                    (github.event.pull_request.head.repo.full_name == 'commaai/openpilot'))) && 'nscloud-ubuntu-22.04-8x8' || 'ubuntu-20.04' }}
+                    (github.event.pull_request.head.repo.full_name == 'jnewb1/openpilot'))) && 'nscloud-ubuntu-22.04-8x8' || 'ubuntu-20.04' }}
     steps:
     - uses: actions/checkout@v4
       with:
@@ -231,7 +231,7 @@ jobs:
         name: process_replay_diff.txt
         path: selfdrive/test/process_replay/diff.txt
     - name: Upload reference logs
-      if: ${{ failure() && steps.print-diff.outcome == 'success' && github.repository == 'commaai/openpilot' && env.AZURE_TOKEN != '' }}
+      if: ${{ failure() && steps.print-diff.outcome == 'success' && github.repository == 'jnewb1/openpilot' && env.AZURE_TOKEN != '' }}
       run: |
         ${{ env.RUN }} "unset PYTHONWARNINGS && AZURE_TOKEN='$AZURE_TOKEN' python selfdrive/test/process_replay/test_processes.py -j$(nproc) --upload-only"
     - name: "Upload coverage to Codecov"
